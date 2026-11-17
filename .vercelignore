@@ -1,0 +1,16 @@
+node_modules
+dist
+.vercel
+.git
+*.mp3
+*.wav
+*.ogg
+*.m4a
+public/worker-test.html
+public/mediapipe
+public/tfjs-wasm
+tmp
+/tmp
+*.tmp
+*.log
+.DS_Store

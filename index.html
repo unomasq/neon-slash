@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Neon Slash</title>
+  </head>
+  <body>
+    <div id="scene"></div>
+    <div id="hud">
+      <div id="hud-left">
+        <div id="score">0</div>
+        <div id="combo"></div>
+        <div id="mult"></div>
+      </div>
+      <div id="hands">
+        <span class="dot left" id="dot-left"></span>
+        <span class="dot right" id="dot-right"></span>
+        <span id="hands-text">Покажи руки</span>
+      </div>
+      <div id="toast"></div>
+      <div id="big"></div>
+      <div id="fps" hidden></div>
+    </div>
+    <div id="status" hidden></div>
+    <div id="ui"></div>
+    <video id="cam" playsinline muted style="display:none"></video>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
