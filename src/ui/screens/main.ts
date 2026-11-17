@@ -27,9 +27,9 @@ export class MainScreen extends BaseScreen {
         </div>
         <p class="error m-err"></p>
       </div>
-      <div class="footer">Сделал за ночь с ИИ<span class="tg-wrap"> · <a target="_blank" rel="noopener" class="tg">Telegram-канал</a></span></div>`);
+      <div class="footer"><a target="_blank" rel="noopener" class="tg">Telegram-канал</a></div>`);
     q(this.root, '.logo').textContent = GAME_NAME;
-    if (TELEGRAM_URL.includes('PLACEHOLDER')) q(this.root, '.tg-wrap').remove();
+    if (TELEGRAM_URL.includes('PLACEHOLDER')) q(this.root, '.footer').remove();
     else q<HTMLAnchorElement>(this.root, '.tg').href = TELEGRAM_URL;
     const panel = q(this.root, '.settings');
     const swap = q<HTMLInputElement>(this.root, '.s-swap');
