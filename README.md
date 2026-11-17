@@ -439,6 +439,12 @@ The app is a static site; any host that can set two response headers works.
 - **Cloudflare Pages**: `public/_headers` (copied to `dist/`) sets the same COOP/COEP headers for all paths.
 - **Why COOP/COEP are required**: they make the page cross-origin isolated, which unlocks `SharedArrayBuffer`, needed for multithreaded WebAssembly in TF.js (4 threads is roughly the difference between single-thread inference and the 20-35 ms figure above). Without them the game falls back to single-threaded wasm automatically. Camera access also requires HTTPS (or localhost).
 
+### Analytics
+
+- **Vercel Web Analytics** (`@vercel/analytics`, injected once in `initAnalytics()`): page views plus custom events `game_start`, `game_end`, `share` and `calibration_done`. Custom events require a Vercel plan that supports them. To enable, open the Vercel dashboard: Project -> Analytics -> Enable. Nothing is recorded in `npm run dev`. The script is served from the same origin (`/_vercel/insights/script.js`), so it works with the COOP/COEP headers above.
+- **Yandex Metrica** (optional): set `YM_COUNTER_ID` in `src/config.ts`. If empty, the tag is not loaded.
+- Analytics failures (for example an ad blocker) are swallowed and never affect the game.
+
 ---
 
 ## Privacy

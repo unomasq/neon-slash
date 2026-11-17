@@ -1,3 +1,4 @@
+import { inject, track as vercelTrack } from '@vercel/analytics';
 import { YM_COUNTER_ID } from '../config';
 
 export type AnalyticsEvent = 'game_start' | 'game_end' | 'share' | 'calibration_done' | 'custom_track';
@@ -9,6 +10,9 @@ const id = Number(YM_COUNTER_ID);
 const enabled = !!YM_COUNTER_ID && Number.isFinite(id);
 
 export function initAnalytics(): void {
+  try {
+    inject({ mode: import.meta.env.DEV ? 'development' : 'production' });
+  } catch { /* blocked or unavailable */ }
   if (!enabled || w.ym) return;
   const ym = function (...args: unknown[]) { (ym.a = ym.a || []).push(args); } as unknown as YmFn & { a?: unknown[][]; l?: number };
   ym.l = Date.now();
@@ -20,9 +24,16 @@ export function initAnalytics(): void {
   ym(id, 'init', { clickmap: true, trackLinks: true, accurateTrackBounce: true });
 }
 
-export function track(event: AnalyticsEvent, params?: Record<string, string | number>): void {
+export function track(event: AnalyticsEvent, params?: Record<string, string | number | boolean | null>): void {
   try {
     if (enabled && w.ym) w.ym(id, 'reachGoal', event, params);
     else console.debug('[analytics]', event, params);
+  } catch { /* ignore */ }
+  try {
+    const clean: Record<string, string | number | boolean | null> = {};
+    if (params) for (const [k, v] of Object.entries(params)) {
+      clean[k] = v === null || ['string', 'number', 'boolean'].includes(typeof v) ? v : String(v);
+    }
+    vercelTrack(event, clean);
   } catch { /* ignore */ }
 }
